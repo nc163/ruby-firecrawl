@@ -1,6 +1,6 @@
 # Ruby Firecrawl
 
-This is a library written in Ruby to communicate with Firecrawl.
+This is a library written in Ruby to communicate with [Firecrawl](https://www.firecrawl.dev).
 Many functions are not implemented.
 
 
