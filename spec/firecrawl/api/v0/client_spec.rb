@@ -168,4 +168,13 @@ RSpec.describe Firecrawl::API::V0::Client do
     )
   end
 
+  #
+  # search
+  #
+
+  # #
+  # it "search" do
+  #   result = firecrawl.search('what is firecrawl')
+  # end
+
 end

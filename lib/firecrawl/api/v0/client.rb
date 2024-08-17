@@ -13,18 +13,6 @@ module Firecrawl
           super(api_key: nil, url: url, debug: debug)
         end
 
-        # GET /status
-        # https://docs.firecrawl.dev/api-reference/endpoint/scrape
-        def crawl_status(job_id)
-          self.get(path: "/crawl/status/#{job_id}")
-        end
-
-        # DELETE /cancel
-        # https://docs.firecrawl.dev/api-reference/endpoint/crawl-cancel
-        def crawl_cancel(job_id)
-          self.delete(path: "/crawl/cancel/#{job_id}")
-        end
-
         # POST /scrape
         # https://docs.firecrawl.dev/api-reference/endpoint/scrape
         #
@@ -36,10 +24,10 @@ module Firecrawl
           parameters = { url: url, timeout: timeout }
           parameters[:pageOptions] = page_options
           parameters[:extractorOptions] = extractor_options
-
           self.post(path: "/scrape", parameters: parameters)
         end
 
+        #
         # @param screenshot [Boolean] Include a screenshot of the top of the page that you are scraping.
         # @param include_html [Boolean] Include the HTML version of the content on page. Will output a html key in the response.
         # @param include_raw_html [Boolean] Include the raw HTML content of the page. Will output a rawHtml key in the response.
@@ -52,6 +40,7 @@ module Firecrawl
           options
         end
 
+        #
         # @page mode ['markdown'|'llm-extraction'|llm-extraction-from-raw-html'|'llm-extraction-from-markdown'] The extraction mode to use. 'markdown': Returns the scraped markdown content, does not perform LLM extraction. 'llm-extraction': Extracts information from the cleaned and parsed content using LLM. 'llm-extraction-from-raw-html': Extracts information directly from the raw HTML using LLM. 'llm-extraction-from-markdown': Extracts information from the markdown content using LLM.
         # @param extraction_prompt [String] A prompt describing what information to extract from the page, applicable for LLM extraction modes.
         # @param extraction_schema [Hash] The schema for the data to be extracted, required only for LLM extraction modes.
@@ -71,14 +60,13 @@ module Firecrawl
         # POST /crawl
         # https://docs.firecrawl.dev/api-reference/endpoint/crawl
         def crawl(url, crawler_options: {}, page_options: {})
-          parameters = {
-            url: url,
-            # crawlerOtions: crawl_crawler_options,
-            # pageOptions: crawl_page_options
-          }
+          parameters = { url: url }
+          parameters[:crawlerOtions] = crawler_options
+          parameters[:crawlerOtions] = page_options
           self.post(path: "/crawl", parameters: parameters)
         end
 
+        #
         def crawl_crawler_options(only_main_content: true, include_html: true, screenshot: true, wait_for: 123, remove_tags: [], headers: {})
           {
             "includes" => [],
@@ -93,6 +81,7 @@ module Firecrawl
           }
         end
 
+        #
         # @param headers [Object] Headers to send with the request. Can be used to send cookies, user-agent, etc.
         # @param include_html [Boolean] Include the HTML version of the content on page.
         # @param include_raw_html [Boolean] Include the raw HTML content of the page. Will output a rawHtml key in the response.
@@ -104,6 +93,44 @@ module Firecrawl
           options
         end
 
+        # GET /crawl/status
+        # https://docs.firecrawl.dev/api-reference/endpoint/scrape
+        def crawl_status(job_id)
+          self.get(path: "/crawl/status/#{job_id}")
+        end
+
+        # DELETE /crawl/cancel
+        # https://docs.firecrawl.dev/api-reference/endpoint/crawl-cancel
+        def crawl_cancel(job_id)
+          self.delete(path: "/crawl/cancel/#{job_id}")
+        end
+
+        # POST /search
+        # https://docs.firecrawl.dev/api-reference/endpoint/search
+        def search(query, page_options: {}, search_options: {})
+          parameters = { query: query }
+          parameters[:pageOptions] = page_options
+          parameters[:searchOptions] = search_options
+          self.post(path: "/search", parameters: parameters)
+        end
+
+        #
+        def search_page_options(only_main_content: false, fetch_page_content: false, include_html: false, include_raw_html: false)
+          options = {}
+          options['onlyMainContent'] = only_main_content
+          options['fetchPageContent'] = fetch_page_content
+          options['includeHtml'] = include_html
+          options['includeRawHtml'] = include_raw_html
+          options
+        end
+
+        # @param limit [Integer] Maximum number of results. Max is 20 during beta.
+        def search_search_options(limit: 1)
+          options = {}
+          options['limit'] = limit
+          options
+        end
+        
         protected
 
         def api_version
