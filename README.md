@@ -12,6 +12,14 @@ gem 'ruby-firecrawl', github: "nc163/ruby-firecrawl"
 
 ## Usage
 
+simple
+```ruby
+require 'firecrawl'
+
+firecrawl = Firecrawl::API::V0::Client.new(url: 'http://127.0.0.1:3002')
+result = firecrawl.scrape('https://www.firecrawl.dev')
+```
+
 or if rails, create a file in `config/initializers/firecrawl.rb` and add the following code:
 
 ```ruby
@@ -20,7 +28,7 @@ require 'firecrawl'
 #= initialize
 Firecrawl::configure do |config|
   # config.api_key = 'xxxx'
-  config.url = 'http://127.0.0.1:3005'
+  config.url = 'http://127.0.0.1:3002'
 end
 ```
 
