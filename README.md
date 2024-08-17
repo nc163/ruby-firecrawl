@@ -5,9 +5,9 @@ Many functions are not implemented.
 
 
 ## Installation
-```bash
+
+```Gemfile
 gem 'ruby-firecrawl', github: "nc163/ruby-firecrawl"
-bundle install
 ```
 
 ## Usage
@@ -27,8 +27,13 @@ end
 ### scrape
 
 ```ruby
-Firecrawl::API::V0.scrape('http://example.com', timeout: 12000)
+firecrawl = Firecrawl::API::V0::Client.new
+result = firecrawl.scrape('https://www.firecrawl.dev')
+puts result['data']
 ```
 
-
 ### crawl
+
+```ruby
+
+```

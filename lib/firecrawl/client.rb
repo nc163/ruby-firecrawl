@@ -1,44 +1,56 @@
+# frozen_string_literal: true
+
 #
 module Firecrawl
-
-  HTTParty::Basement.default_options.update(debug_output: $stdout)
-
   #
   class Client
-    def initialize(api_key: nil, url: nil)
+
+    #
+    def initialize(api_key: nil, url: nil, debug: false)
       Firecrawl.configuration.api_key = api_key if api_key
-      Firecrawl.configuration.url     = url if url
+      Firecrawl.configuration.url = url if url
+      HTTParty::Basement.default_options.update(debug_output: $stdout) if debug
     end
 
-    # # HTTP Helpers
-    #
-    def self.get(path:, api_version:)
+    # HTTP Helpers
+    def get(path:)
       HTTParty.get(
-        uri(path: path, api_version: api_version),
+        uri(path: path),
         headers: headers
       )
     end
 
-    def self.post(path:, api_version:, parameters:)
-      puts '====='
-      puts uri(path: path, api_version: api_version)
-      puts headers
-      puts '====='
-
+    #
+    def post(path:, parameters: {})
       HTTParty.post(
-        uri(path: path, api_version: api_version),
+        uri(path: path),
         headers: headers,
         body: parameters&.to_json
       )
     end
 
-    private_class_method def self.uri(path:, api_version:)
-      return "#{Firecrawl.configuration.url}/#{api_version}#{path}" if Firecrawl.configuration.url.present?
-      "https://api.firecrawl.dev/#{api_version}" + path
+    #
+    def delete(path:)
+      HTTParty.delete(
+        uri(path: path),
+        headers: headers
+      )
     end
 
-    private_class_method def self.headers
-      headers = { "Content-Type" => "application/json" }
+    protected
+    
+    def api_version
+      raise
+    end
+
+    private
+
+    def uri(path:)
+      "#{Firecrawl.configuration.url}/#{self.api_version}#{path}"
+    end
+
+    def headers
+      headers = { "Content-Type" => "application/json; charset=utf-8" }
       headers["Authorization"] = "Bearer #{Firecrawl.configuration.api_key}" if Firecrawl.configuration.api_key
       headers
     end
