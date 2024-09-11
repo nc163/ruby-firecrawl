@@ -16,7 +16,7 @@ simple
 ```ruby
 require 'firecrawl'
 
-firecrawl = Firecrawl::API::V0::Client.new(url: 'http://127.0.0.1:3002')
+firecrawl = Firecrawl::API::V1::Client.new(url: 'http://127.0.0.1:3002')
 result = firecrawl.scrape('https://www.firecrawl.dev')
 ```
 

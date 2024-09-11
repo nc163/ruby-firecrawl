@@ -3,13 +3,13 @@
 require "httparty"
 require "firecrawl/client"
 require "firecrawl/api/v0/client"
+require "firecrawl/api/v1/client"
 require "firecrawl/version"
 
 #
 module Firecrawl
 
-  class Error < StandardError; end
-  class ConfigurationError < Error; end
+  class ConfigurationError < StandardError; end
 
   class Configuration
     attr_accessor :url, :api_key, :debug

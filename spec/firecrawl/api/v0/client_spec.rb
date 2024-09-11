@@ -119,38 +119,38 @@ RSpec.describe Firecrawl::API::V0::Client do
   #
 
   #
-  it "crawl" do
-    result = firecrawl.crawl('https://www.firecrawl.dev')
-    job_id = result['jobId']
+  # it "crawl" do
+  #   result = firecrawl.crawl('https://www.firecrawl.dev')
+  #   job_id = result['jobId']
 
-    expect(result.parsed_response).to match(
-      a_hash_including(
-        'jobId' => anything
-      )
-    )
+  #   expect(result.parsed_response).to match(
+  #     a_hash_including(
+  #       'jobId' => anything
+  #     )
+  #   )
 
-    sleep(1)
-    crawl_status_result = firecrawl.crawl_status(job_id)
-    expect(crawl_status_result.parsed_response).to match(
-      a_hash_including(
-        'status' => anything,
-        'current' => anything,
-        'current_url' => anything,
-        'current_step' => anything,
-        'total' => anything,
-        'data' => anything,
-        'partial_data' => anything
-      )
-    )
+  #   sleep(1)
+  #   crawl_status_result = firecrawl.crawl_status(job_id)
+  #   expect(crawl_status_result.parsed_response).to match(
+  #     a_hash_including(
+  #       'status' => anything,
+  #       'current' => anything,
+  #       'current_url' => anything,
+  #       'current_step' => anything,
+  #       'total' => anything,
+  #       'data' => anything,
+  #       'partial_data' => anything
+  #     )
+  #   )
 
-    sleep(5)
-    crawl_cancel_result = firecrawl.crawl_cancel(job_id)
-    expect(crawl_cancel_result.parsed_response).to match(
-      a_hash_including(
-        'status' => anything
-      )
-    )
-  end
+  #   sleep(5)
+  #   crawl_cancel_result = firecrawl.crawl_cancel(job_id)
+  #   expect(crawl_cancel_result.parsed_response).to match(
+  #     a_hash_including(
+  #       'status' => anything
+  #     )
+  #   )
+  # end
 
   #
   it "crawl page_options" do

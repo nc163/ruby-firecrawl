@@ -12,7 +12,7 @@ module Firecrawl
       HTTParty::Basement.default_options.update(debug_output: $stdout) if debug
     end
 
-    # HTTP Helpers
+    # 
     def get(path:)
       HTTParty.get(
         uri(path: path),
@@ -50,9 +50,9 @@ module Firecrawl
     end
 
     def headers
-      headers = { "Content-Type" => "application/json; charset=utf-8" }
-      headers["Authorization"] = "Bearer #{Firecrawl.configuration.api_key}" if Firecrawl.configuration.api_key
-      headers
+      retval = { "Content-Type" => "application/json; charset=utf-8" }
+      retval["Authorization"] = "Bearer #{Firecrawl.configuration.api_key}" if Firecrawl.configuration.api_key
+      retval
     end
   end
 end
