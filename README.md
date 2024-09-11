@@ -35,13 +35,15 @@ end
 ### scrape
 
 ```ruby
-firecrawl = Firecrawl::API::V0::Client.new
+firecrawl = Firecrawl::API::V1::Client.new
 result = firecrawl.scrape('https://www.firecrawl.dev')
-puts result['data']
+puts result
 ```
 
 ### crawl
 
 ```ruby
-
+firecrawl = Firecrawl::API::V1::Client.new
+result = firecrawl.crawl('https://www.firecrawl.dev')
+puts result
 ```
