@@ -43,7 +43,6 @@ puts result
 
 ### scrape + extract
 
-
 ```ruby
 firecrawl = Firecrawl::API::V1::Client.new
 
@@ -58,9 +57,10 @@ extract = {
     }
   }
 }
-result = client.scrape(test_page, formats: ['extract'], timeout: 12000, extract: extract)
+result = client.scrape('https://www.firecrawl.dev', formats: ['extract'], timeout: 12000, extract: extract)
 puts result
 ```
+
 
 ### crawl
 
