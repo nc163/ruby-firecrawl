@@ -26,6 +26,7 @@ module Firecrawl
         # @param headers [Object] Headers to send with the request. Can be used to send cookies, user-agent, etc.
         # @param wait_for [Integer] Specify a delay in milliseconds before fetching the content, allowing the page sufficient time to load.
         # @param timeout [Integer] Timeout in milliseconds for the request.
+        # @param extract [Hash] Extract object.
         def scrape(url, formats: ['markdown'], only_main_content: true, include_tags: [], exclude_tags: [], headers: {}, wait_for: 1000, timeout: 30000, extract: nil)
           parameters = {
             url: url,

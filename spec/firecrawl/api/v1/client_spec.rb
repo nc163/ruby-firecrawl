@@ -27,6 +27,55 @@ RSpec.describe Firecrawl::API::V1::Client do
   end
 
   # #
+  # it "/v1/scrape formats screenshot@fullPage" do
+  #   result = client.scrape(test_page, formats: ['screenshot@fullPage'], timeout: 12000)
+
+  #   expect(result.parsed_response).to match(
+  #     a_hash_including(
+  #       'success' => true, 
+  #       'data' => a_hash_including(
+  #         'screenshot' => a_string_matching(/.+/),
+  #         "metadata" => a_hash_including(
+  #           'title' => a_string_matching(/.+/)
+  #         )
+  #       )
+  #     )
+  #   )
+  # end
+
+  #
+  it "/v1/scrape extract" do
+    extract = { 
+      schema: 
+      {
+        'type': 'object',
+        'required': ['twitterAccountUrl', 'githubRepositoryUrl'],
+        'properties': {
+          'twitterAccountUrl': { "type": "string" },
+          'githubRepositoryUrl': { "type": "string" }
+        }
+      }
+    }
+
+    result = client.scrape(test_page, formats: ['extract'], timeout: 12000, extract: extract)
+
+    expect(result.parsed_response).to match(
+      a_hash_including(
+        'success' => true,
+        'data' => a_hash_including(
+          'extract' => a_hash_including(
+            'twitterAccountUrl' => a_string_matching(/.+/),
+            'githubRepositoryUrl' => a_string_matching(/.+/)
+          ),
+          "metadata" => a_hash_including(
+            'title' => a_string_matching(/.+/)
+          )
+        )
+      )
+    )
+  end
+
+  # 
   # it "/v1/scrape with screenshot" do
   #   result = client.scrape(test_page, formats: ['markdown', 'screenshot'], timeout: 12000)
 
@@ -49,7 +98,7 @@ RSpec.describe Firecrawl::API::V1::Client do
 
     expect(result.parsed_response).to match(
       a_hash_including(
-        'success' => true, 
+        'success' => true,
         'id' => a_string_matching(/.+/),
         'url' => a_string_matching(/.+/)
       )
@@ -57,15 +106,11 @@ RSpec.describe Firecrawl::API::V1::Client do
 
     crawl_id = result['id']
 
-    puts "Crawl ID: #{crawl_id}"
-
     result = client.get_crawl_status(crawl_id)
-
-
     result = client.cancel_crawl(crawl_id)
     expect(result.parsed_response).to match(
       a_hash_including(
-        'success' => true, 
+        'success' => true,
         'message' => a_string_matching('Crawl job successfully cancelled.'),
       )
     )
