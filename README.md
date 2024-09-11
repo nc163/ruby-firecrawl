@@ -40,6 +40,28 @@ result = firecrawl.scrape('https://www.firecrawl.dev')
 puts result
 ```
 
+
+### scrape + extract
+
+
+```ruby
+firecrawl = Firecrawl::API::V1::Client.new
+
+extract = { 
+  schema: 
+  {
+    'type': 'object',
+    'required': ['twitterAccountUrl', 'githubRepositoryUrl'],
+    'properties': {
+      'twitterAccountUrl': { "type": "string" },
+      'githubRepositoryUrl': { "type": "string" }
+    }
+  }
+}
+result = client.scrape(test_page, formats: ['extract'], timeout: 12000, extract: extract)
+puts result
+```
+
 ### crawl
 
 ```ruby
