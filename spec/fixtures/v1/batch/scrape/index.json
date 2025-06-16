@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "id": "<string>",
+  "url": "<string>",
+  "invalidURLs": [
+    "<string>"
+  ]
+}

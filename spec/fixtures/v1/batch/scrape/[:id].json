@@ -1,0 +1,28 @@
+{
+  "status": "<string>",
+  "total": 123,
+  "completed": 123,
+  "creditsUsed": 123,
+  "expiresAt": "2023-11-07T05:31:56Z",
+  "next": "<string>",
+  "data": [
+    {
+      "markdown": "<string>",
+      "html": "<string>",
+      "rawHtml": "<string>",
+      "links": [
+        "<string>"
+      ],
+      "screenshot": "<string>",
+      "metadata": {
+        "title": "<string>",
+        "description": "<string>",
+        "language": "<string>",
+        "sourceURL": "<string>",
+        "<any other metadata> ": "<string>",
+        "statusCode": 123,
+        "error": "<string>"
+      }
+    }
+  ]
+}

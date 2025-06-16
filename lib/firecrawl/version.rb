@@ -2,5 +2,5 @@
 
 #
 module Firecrawl
-  VERSION = "0.0.2".freeze
+  VERSION = "1.11.0".freeze
 end

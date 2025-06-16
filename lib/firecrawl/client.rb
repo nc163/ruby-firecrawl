@@ -1,58 +1,36 @@
 # frozen_string_literal: true
 
+require "firecrawl/http"
+
 #
 module Firecrawl
-  #
   class Client
+    include Firecrawl::HTTP
 
-    #
-    def initialize(api_key: nil, url: nil, debug: false)
-      Firecrawl.configuration.api_key = api_key if api_key
-      Firecrawl.configuration.url = url if url
-      HTTParty::Basement.default_options.update(debug_output: $stdout) if debug
-    end
-
-    # 
-    def get(path:)
-      HTTParty.get(
-        uri(path: path),
-        headers: headers
-      )
-    end
-
-    #
-    def post(path:, parameters: {})
-      HTTParty.post(
-        uri(path: path),
-        headers: headers,
-        body: parameters&.to_json
-      )
-    end
-
-    #
-    def delete(path:)
-      HTTParty.delete(
-        uri(path: path),
-        headers: headers
-      )
+    def initialize(uri_base = nil)
+      self.uri_base = uri_base.nil? ? Firecrawl.configuration.uri 
+                               : URI.parse(uri_base)
     end
 
     protected
-    
-    def api_version
-      raise
+
+    def uri_base=(uri)
+      @uri_base = uri
     end
 
-    private
-
-    def uri(path:)
-      "#{Firecrawl.configuration.url}/#{self.api_version}#{path}"
+    def uri_base
+      @uri_base
     end
 
-    def headers
-      retval = { "Content-Type" => "application/json; charset=utf-8" }
-      retval["Authorization"] = "Bearer #{Firecrawl.configuration.api_key}" if Firecrawl.configuration.api_key
-      retval
+    def uri(path: , parameters: nil)
+      uri_base.merge(path).tap do |uri|
+        uri.query = URI.encode_www_form(parameters) if parameters
+      end
+    end
+
+    # エラーハンドリング
+    def handle_error(response)
+      raise Firecrawl::ErrorHandler.new(response.status, response.body)
     end
   end
 end

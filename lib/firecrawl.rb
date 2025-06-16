@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-require "httparty"
-require "firecrawl/client"
-require "firecrawl/api/v0/client"
-require "firecrawl/api/v1/client"
+require "firecrawl/v1/client"
+# require "firecrawl/v2/client"
 require "firecrawl/version"
 
 #
 module Firecrawl
-
-  class ConfigurationError < StandardError; end
+  class Error < StandardError; end
+  class ConfigurationError < Error; end
+  class AuthenticationError < Error; end
 
   class Configuration
     attr_accessor :url, :api_key, :debug
+    attr_writer :timeout
 
     def initialize
       @url = 'https://api.firecrawl.dev'
@@ -20,6 +20,8 @@ module Firecrawl
   end
 
   class << self
+    attr_writer :configuration
+
     def configure
       yield(configuration)
     end
@@ -28,5 +30,4 @@ module Firecrawl
       @configuration ||= Configuration.new
     end
   end
-
 end

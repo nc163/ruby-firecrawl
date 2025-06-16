@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "data": [
+    {
+      "title": "<string>",
+      "description": "<string>",
+      "url": "<string>",
+      "markdown": "<string>",
+      "html": "<string>",
+      "rawHtml": "<string>",
+      "links": [
+        "<string>"
+      ],
+      "screenshot": "<string>",
+      "metadata": {
+        "title": "<string>",
+        "description": "<string>",
+        "sourceURL": "<string>",
+        "statusCode": 123,
+        "error": "<string>"
+      }
+    }
+  ],
+  "warning": "<string>"
+}

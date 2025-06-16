@@ -1,0 +1,47 @@
+{
+  "success": true,
+  "data": {
+    "markdown": "<string>",
+    "html": "<string>",
+    "rawHtml": "<string>",
+    "screenshot": "<string>",
+    "links": [
+      "<string>"
+    ],
+    "actions": {
+      "screenshots": [
+        "<string>"
+      ],
+      "scrapes": [
+        {
+          "url": "<string>",
+          "html": "<string>"
+        }
+      ],
+      "javascriptReturns": [
+        {
+          "type": "<string>",
+          "value": "<any>"
+        }
+      ]
+    },
+    "metadata": {
+      "title": "<string>",
+      "description": "<string>",
+      "language": "<string>",
+      "sourceURL": "<string>",
+      "<any other metadata> ": "<string>",
+      "statusCode": 123,
+      "error": "<string>"
+    },
+    "llm_extraction": {},
+    "warning": "<string>",
+    "changeTracking": {
+      "previousScrapeAt": "2023-11-07T05:31:56Z",
+      "changeStatus": "new",
+      "visibility": "visible",
+      "diff": "<string>",
+      "json": {}
+    }
+  }
+}

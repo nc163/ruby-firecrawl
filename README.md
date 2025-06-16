@@ -1,8 +1,10 @@
 # Ruby Firecrawl
 
 This is a library written in Ruby to communicate with [Firecrawl](https://www.firecrawl.dev).
-Many functions are not implemented.
 
+Only the features documented under `api/v1` as of Firecrawl version v1.11.0 are provided by this library.
+
+`/spec` The following tests are performed with Firecrawl version v1.11.0 running in self-hosted mode.
 
 ## Installation
 
@@ -16,7 +18,7 @@ simple
 ```ruby
 require 'firecrawl'
 
-firecrawl = Firecrawl::API::V1::Client.new(url: 'http://127.0.0.1:3002')
+firecrawl = Firecrawl::V1::Client.new(url: 'http://127.0.0.1:3002')
 result = firecrawl.scrape('https://www.firecrawl.dev')
 ```
 
@@ -27,7 +29,6 @@ require 'firecrawl'
 
 #= initialize
 Firecrawl::configure do |config|
-  # config.api_key = 'xxxx'
   config.url = 'http://127.0.0.1:3002'
 end
 ```
@@ -35,7 +36,7 @@ end
 ### scrape
 
 ```ruby
-firecrawl = Firecrawl::API::V1::Client.new
+firecrawl = Firecrawl::V1::Client.new
 result = firecrawl.scrape('https://www.firecrawl.dev')
 puts result
 ```
@@ -44,7 +45,7 @@ puts result
 ### scrape + extract
 
 ```ruby
-firecrawl = Firecrawl::API::V1::Client.new
+firecrawl = Firecrawl::V1::Client.new
 
 extract = { 
   schema: 
@@ -65,7 +66,7 @@ puts result
 ### crawl
 
 ```ruby
-firecrawl = Firecrawl::API::V1::Client.new
+firecrawl = Firecrawl::V1::Client.new
 result = firecrawl.crawl('https://www.firecrawl.dev')
 puts result
 ```

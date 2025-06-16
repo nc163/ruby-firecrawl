@@ -1,0 +1,61 @@
+{
+  "success": true,
+  "crawls": [
+    {
+      "id": "3c90c3cc-0d44-4b50-8888-8dd25736052a",
+      "teamId": "<string>",
+      "url": "<string>",
+      "options": {
+        "scrapeOptions": {
+          "formats": [
+            "markdown"
+          ],
+          "onlyMainContent": true,
+          "includeTags": [
+            "<string>"
+          ],
+          "excludeTags": [
+            "<string>"
+          ],
+          "maxAge": 0,
+          "headers": {},
+          "waitFor": 0,
+          "mobile": false,
+          "skipTlsVerification": false,
+          "timeout": 30000,
+          "parsePDF": true,
+          "jsonOptions": {
+            "schema": {},
+            "systemPrompt": "<string>",
+            "prompt": "<string>"
+          },
+          "actions": [
+            {
+              "type": "wait",
+              "milliseconds": 2,
+              "selector": "#my-element"
+            }
+          ],
+          "location": {
+            "country": "US",
+            "languages": [
+              "en-US"
+            ]
+          },
+          "removeBase64Images": true,
+          "blockAds": true,
+          "proxy": "basic",
+          "changeTrackingOptions": {
+            "modes": [
+              "git-diff"
+            ],
+            "schema": {},
+            "prompt": "<string>",
+            "tag": null
+          },
+          "storeInCache": true
+        }
+      }
+    }
+  ]
+}
