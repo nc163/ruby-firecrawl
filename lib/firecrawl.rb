@@ -17,6 +17,10 @@ module Firecrawl
     def initialize
       @url = 'https://api.firecrawl.dev'
     end
+
+    def uri
+      @uri ||= URI.join(url, "/")
+    end
   end
 
   class << self
