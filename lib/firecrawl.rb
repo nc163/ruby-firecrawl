@@ -11,15 +11,25 @@ module Firecrawl
   class AuthenticationError < Error; end
 
   class Configuration
-    attr_accessor :url, :api_key, :debug
+    attr_accessor :host, :port, :scheme, :api_key, :debug
     attr_writer :timeout
 
     def initialize
-      @url = 'https://api.firecrawl.dev'
+      @scheme = 'https'
+      @host = 'api.firecrawl.dev'
+      @port = nil
+    end
+
+    def url
+      uri.to_s
     end
 
     def uri
-      @uri ||= URI.join(url, "/")
+      @uri ||= URI::Generic.build(
+        scheme: @scheme,
+        host: @host,
+        port: @port
+      )
     end
   end
 
