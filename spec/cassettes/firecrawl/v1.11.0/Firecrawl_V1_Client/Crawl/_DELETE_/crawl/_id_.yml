@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: http://host.docker.internal:3002/v1/crawl/407a88ac-dd36-48d7-8a41-784869a95a73
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v2.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Powered-By:
+      - Express
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '22'
+      Etag:
+      - W/"16-6gL6aNpHo0R2OXVVmKChMiHjU/E"
+      Date:
+      - Fri, 31 Oct 2025 18:30:06 GMT
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+    body:
+      encoding: UTF-8
+      string: '{"status":"cancelled"}'
+  recorded_at: Fri, 31 Oct 2025 18:30:06 GMT
+recorded_with: VCR 6.3.1

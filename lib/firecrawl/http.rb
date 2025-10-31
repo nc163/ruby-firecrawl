@@ -26,7 +26,7 @@ module Firecrawl
     private
 
     def connection
-      faraday = Faraday.new do |b|
+      @faraday ||= Faraday.new do |b|
         default_headers.each do |key, value|
           b.headers[key] = value
         end
@@ -36,8 +36,6 @@ module Firecrawl
         b.response :raise_error
         b.response :json
       end
-
-      faraday
     end
 
   end

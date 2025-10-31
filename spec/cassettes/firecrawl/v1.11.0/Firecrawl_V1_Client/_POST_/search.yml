@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://host.docker.internal:3002/v1/search
+    body:
+      encoding: UTF-8
+      string: '{"query":"firecrawlについて"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v2.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Powered-By:
+      - Express
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '62'
+      Etag:
+      - W/"3e-dwQoaDp7PxDSETGZwePNPTRpcfs"
+      Date:
+      - Fri, 31 Oct 2025 18:50:43 GMT
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"data":[],"warning":"No search results found"}'
+  recorded_at: Fri, 31 Oct 2025 18:50:43 GMT
+recorded_with: VCR 6.3.1

@@ -61,7 +61,7 @@ module Firecrawl
 
       # GET /v1/batch/scrape/{:id}/errors
       # @param id [String] The ID of the batch scrape job to get errors for.
-      def get_batch_scrape_errors(id)
+      def batch_scrape_errors(id)
         response = get uri(path: "/v1/batch/scrape/#{id}/errors")
         if response.success?
           BatchScrapeErrors.new(response.body)
@@ -87,26 +87,46 @@ module Firecrawl
 
       # GET /v1/crawl/{:id}
       # @param job_id [String] The ID of the crawl job.
-      def get_crawl_status(job_id)
-        get uri(path: "/v1/crawl/#{job_id}")
+      def crawl_status(job_id)
+        response = get uri(path: "/v1/crawl/#{job_id}")
+        if response.success?
+          CrawlStatusResponse.new(response.body)
+        else
+          handle_error(response)
+        end
       end
       
 
       # DELETE /v1/crawl/{:id}
       # @param job_id [String] The ID of the crawl job.
       def cancel_crawl(job_id)
-        delete uri(path: "/v1/crawl/#{job_id}")
+        response = delete uri(path: "/v1/crawl/#{job_id}")
+        if response.success?
+          CancelCrawlResponse.new(response.body)
+        else
+          handle_error(response)
+        end
       end
 
       # GET /v1/crawl/{:id}/errors
       # @params job_id [String] The ID of the crawl job to get errors for.
-      def get_crawl_errors(job_id)
-        get uri(path: "/v1/crawl/#{job_id}/errors")
+      def crawl_errors(job_id)
+        response = get uri(path: "/v1/crawl/#{job_id}/errors")
+        if response.success?
+          CrawlErrorsResponse.new(response.body)
+        else
+          handle_error(response)
+        end
       end
 
       # GET /v1/crawl/active
-      def get_active_crawls
-        get uri(path: "/v1/crawl/active")
+      def active_crawls
+        response = get uri(path: "/v1/crawl/active")
+        if response.success?
+          ActiveCrawlsResponse.new(response.body)
+        else
+          handle_error(response)
+        end
       end
 
       # Map Endpoints
@@ -117,6 +137,11 @@ module Firecrawl
       def map(url, options = {})
         options[:url] = url
         response = post uri(path: "/v1/map"), body: options
+        if response.success?
+          MapResponse.new(response.body)
+        else
+          handle_error(response)
+        end
       end
 
       # Search Endpoints
@@ -127,6 +152,11 @@ module Firecrawl
       def search(query, options = {})
         options[:query] = query
         response = post uri(path: "/v1/search"), body: options
+        if response.success?
+          SearchResponse.new(response.body)
+        else
+          handle_error(response)
+        end
       end
 
       # Extract Endpoints
@@ -137,6 +167,11 @@ module Firecrawl
       def extract(urls, options = {})
         options[:urls] = urls
         response = post uri(path: "/v1/extract"), body: options
+        if response.success?
+          ExtractResponse.new(response.body)
+        else
+          handle_error(response)
+        end
       end
       
       # POST /v1/extract

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "firecrawl/v0/client"
 require "firecrawl/v1/client"
 # require "firecrawl/v2/client"
 require "firecrawl/version"
@@ -30,6 +31,14 @@ module Firecrawl
         host: @host,
         port: @port
       )
+    end
+
+    def url=(url)
+      uri = URI.parse(url)
+      @scheme = uri.scheme
+      @host = uri.host
+      @port = uri.port
+      @uri = uri
     end
   end
 

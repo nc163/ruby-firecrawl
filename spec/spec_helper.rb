@@ -3,17 +3,25 @@ Bundler.setup
 
 require "json"
 require "firecrawl"
+require 'vcr'
+require 'webmock/rspec'
 require_relative 'supports/fixtures_helper'
 
 RSpec.configure do |rspec_config|
   rspec_config.include FixturesHelper
 
   rspec_config.before(:all) do
-    Firecrawl::configure do |firecrawl_config|
-      firecrawl_config.url = 'http://host.docker.internal:3002'
+    Firecrawl::configure do |config|
+      config.url = 'http://host.docker.internal:3002'
+    end
+
+    VCR.configure do |config|
+      config.cassette_library_dir = "spec/cassettes/firecrawl/v1.11.0"
+      config.hook_into :webmock
+      config.configure_rspec_metadata!
+      config.allow_http_connections_when_no_cassette = false
     end
   end
-
 end
 
 

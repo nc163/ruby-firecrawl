@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://host.docker.internal:3002/v1/batch/scrape
+    body:
+      encoding: UTF-8
+      string: '{"urls":["https://www.firecrawl.dev","https://rubygems.org/"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v2.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Powered-By:
+      - Express
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '155'
+      Etag:
+      - W/"9b-IHqlqbOVz67OleocaCF+VlaAERY"
+      Date:
+      - Fri, 31 Oct 2025 18:05:32 GMT
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"id":"dabe2b5f-a235-426e-ab2f-a6aedf7c6ab4","url":"https://host.docker.internal:3002/v1/batch/scrape/dabe2b5f-a235-426e-ab2f-a6aedf7c6ab4"}'
+  recorded_at: Fri, 31 Oct 2025 18:05:32 GMT
+recorded_with: VCR 6.3.1

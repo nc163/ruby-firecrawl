@@ -124,18 +124,18 @@ module Firecrawl
     end
 
     class BatchScrapeErrors < Response 
-      attr_reader :errors 
-      attr_reader :robotsBlocked
+      attr_reader :success
+      attr_reader :message 
       
       def initialize(response)
-        @errors = response['errors'] if response.key?('errors')
-        @robotsBlocked = response['robotsBlocked'] if response.key?('robotsBlocked')
+        @success = response['success']
+        @message = response['message'] if response.key?('message')
       end
 
       def to_h
         {
-          errors: @errors,
-          robotsBlocked: @robotsBlocked
+          success: @success,
+          message: @message
         }
       end
     end
@@ -163,6 +163,7 @@ module Firecrawl
     end
 
     class CrawlStatusResponse < Response
+      attr_reader :success
       attr_reader :status
       attr_reader :total
       attr_reader :completed
@@ -172,12 +173,14 @@ module Firecrawl
       attr_reader :data
 
       def initialize(response)
+        @success = response['success']
         @status = response['status']
         @total = response['total'] if response.key?('total')
         @completed = response['completed'] if response.key?('completed')
         @creditsUsed = response['creditsUsed'] if response.key?('creditsUsed')
         @expiresAt = response['expiresAt'] if response.key?('expiresAt')
         @next = response['next'] if response.key?('next')
+
         if response.key?('data') && response['data'].is_a?(Array)
           @data = response['data'].map { |doc| Document.new(doc) }
         end
@@ -235,6 +238,7 @@ module Firecrawl
 
       def to_h
         {
+          status: @status
         }
       end
     end
@@ -242,11 +246,11 @@ module Firecrawl
     # Map Endpoints
 
     class MapResponse < Response
-      attr_reader :status
+      attr_reader :success
       attr_reader :links
 
       def initialize(response)
-        @status = response['status']
+        @success = response['success']
         @links = response['links'] if response.key?('links')
       end
 
@@ -261,12 +265,12 @@ module Firecrawl
     # Search Endpoints
 
     class SearchResponse < Response
-      attr_reader :status
+      attr_reader :success
       attr_reader :data
       attr_reader :warning
 
       def initialize(response)
-        @status = response['status']
+        @success = response['success']
         if response.key?('data') && response['data'].is_a?(Array)
           @data = response['data'].map { |doc| Document.new(doc) }
         end

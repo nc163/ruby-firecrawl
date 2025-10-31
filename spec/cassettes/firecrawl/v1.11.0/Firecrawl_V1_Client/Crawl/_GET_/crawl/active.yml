@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://host.docker.internal:3002/v1/crawl/active
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v2.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      X-Powered-By:
+      - Express
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '41'
+      Etag:
+      - W/"29-uDtKJX3qtG6Fl1W7qKTVX4v4Qhk"
+      Date:
+      - Fri, 31 Oct 2025 18:38:53 GMT
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+    body:
+      encoding: UTF-8
+      string: '{"success":false,"error":"Job not found"}'
+  recorded_at: Fri, 31 Oct 2025 18:38:53 GMT
+recorded_with: VCR 6.3.1
