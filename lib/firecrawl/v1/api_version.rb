@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-#
 module Firecrawl
-  VERSION = "2.0.0".freeze
+  module V1
+    API_VERSION = 1
+  end
 end

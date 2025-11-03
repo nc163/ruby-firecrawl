@@ -1,7 +1,6 @@
 require "bundler/setup"
 Bundler.setup
 
-require "json"
 require "firecrawl"
 require 'vcr'
 require 'webmock/rspec'
@@ -16,12 +15,17 @@ RSpec.configure do |rspec_config|
     end
 
     VCR.configure do |config|
-      config.cassette_library_dir = "spec/cassettes/firecrawl/v1.11.0"
+      config.cassette_library_dir = "spec/cassettes/server"
       config.hook_into :webmock
       config.configure_rspec_metadata!
       config.allow_http_connections_when_no_cassette = false
     end
   end
+
+  # if true
+  #   VCR.turn_off!(ignore_cassettes: true)
+  #   WebMock.allow_net_connect!
+  # end
 end
 
 

@@ -32,8 +32,8 @@ module Firecrawl
         end
         b.options[:open_timeout] = 2
         b.options[:timeout] = 60
+        b.use ErrorHandler
         b.use MiddlewareErrors if @log_errors
-        b.response :raise_error
         b.response :json
       end
     end

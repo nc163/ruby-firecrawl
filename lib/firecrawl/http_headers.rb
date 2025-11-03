@@ -10,6 +10,5 @@ module Firecrawl
       @default_headers['Authorization'] = "Bearer #{Firecrawl.configuration.api_key}" if Firecrawl.configuration.api_key
       @default_headers
     end
-
   end
 end

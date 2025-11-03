@@ -5,12 +5,12 @@ require_relative "api_version"
 require_relative "responses"
 
 module Firecrawl
-  module V1
+  module V2
     class Client < Firecrawl::Client
 
       # Scrape Endpoints
 
-      # POST /v1/scrape
+      # POST /v2/scrape
       # @param url [String] URL to scrape.
       # @param options [Hash] Options to pass to the scrape endpoint. https://docs.firecrawl.dev/api-reference/endpoint/scrape
       # @return [Firecrawl::V1::Scrape] 
@@ -21,7 +21,7 @@ module Firecrawl
         Scrape.new(**response.body['data'])
       end
 
-      # POST /v1/batch/scrape
+      # POST /v2/batch/scrape
       # @param urls [Array<String>] Array of URLs to scrape.
       # @param options [Hash] Options to pass to the scrape endpoint. https://docs.firecrawl.dev/api-reference/endpoint/batch-scrape
       # @return [Firecrawl::V1::BatchScrape]
@@ -32,7 +32,7 @@ module Firecrawl
       end
 
 
-      # GET /v1/batch/scrape/#{:id}
+      # GET /v2/batch/scrape/#{:id}
       # @param id [String] The ID of the batch scrape job.
       # @return [Firecrawl::V1::BatchScrapeStatus] The status of the batch scrape job.
       def batch_scrape_status(id)
@@ -40,7 +40,7 @@ module Firecrawl
         BatchScrapeStatus.new(**response.body)
       end
 
-      # DELETE /v1/batch/scrape/{:id}
+      # DELETE /v2/batch/scrape/{:id}
       # @param id [String] The ID of the batch scrape job to cancel.
       # @return [Firecrawl::V1::CancelBatchScrape]
       def cancel_batch_scrape(id)
@@ -48,7 +48,7 @@ module Firecrawl
         CancelBatchScrape.new(**response.body)
       end
 
-      # GET /v1/batch/scrape/{:id}/errors
+      # GET /v2/batch/scrape/{:id}/errors
       # @param id [String] The ID of the batch scrape job to get errors for.
       # @return [Firecrawl::V1::BatchScrapeErrors] The errors from the batch scrape job.
       def batch_scrape_errors(id)
@@ -58,7 +58,7 @@ module Firecrawl
 
       # Crawl Endpoints
 
-      # POST /v1/crawl
+      # POST /v2/crawl
       # @param url [String] The base URL to start crawling from.
       # @param options [Hash] Options to pass to the crawl endpoint. https://docs.firecrawl.dev/api-reference/endpoint/crawl-post
       # @return [Firecrawl::V1::Crawl] The crawl job information.
@@ -68,7 +68,7 @@ module Firecrawl
         Crawl.new(**response.body)
       end
 
-      # GET /v1/crawl/{:id}
+      # GET /v2/crawl/{:id}
       # @param job_id [String] The ID of the crawl job.
       # @return [Firecrawl::V1::CrawlStatus] The status of the crawl job.
       def crawl_status(job_id)
@@ -76,7 +76,7 @@ module Firecrawl
         CrawlStatus.new(**response.body)
       end
       
-      # DELETE /v1/crawl/{:id}
+      # DELETE /v2/crawl/{:id}
       # @param job_id [String] The ID of the crawl job.
       # @return [Firecrawl::V1::CancelCrawl] The cancellation result.
       def cancel_crawl(job_id)
@@ -84,7 +84,7 @@ module Firecrawl
         CancelCrawl.new(response.body)
       end
 
-      # GET /v1/crawl/{:id}/errors
+      # GET /v2/crawl/{:id}/errors
       # @param job_id [String] The ID of the crawl job to get errors for.
       # @return [Firecrawl::V1::CrawlErrors] The errors from the crawl job.
       def crawl_errors(job_id)
@@ -92,7 +92,7 @@ module Firecrawl
         CrawlErrors.new(response.body)
       end
 
-      # GET /v1/crawl/active
+      # GET /v2/crawl/active
       # @return [Firecrawl::V1::ActiveCrawls] The active crawls status.
       def active_crawls
         response = get to("crawl/active")
@@ -101,7 +101,7 @@ module Firecrawl
 
       # Map Endpoints
 
-      # POST /v1/map
+      # POST /v2/map
       # @param url [String] The base URL to start crawling from
       # @param options [Hash] Options to pass to the map endpoint. https://docs.firecrawl.dev/api-reference/endpoint/map
       # @return [Firecrawl::V1::Map] The mapped links from the website.
@@ -113,7 +113,7 @@ module Firecrawl
 
       # Search Endpoints
 
-      # POST /v1/search
+      # POST /v2/search
       # @param query [String] The search query to perform.
       # @param options [Hash] Options to pass to the search endpoint. https://docs.firecrawl.dev/api-reference/endpoint/search
       # @return [Firecrawl::V1::Search] The search results.
@@ -125,7 +125,7 @@ module Firecrawl
 
       # Extract Endpoints
 
-      # POST /v1/extract
+      # POST /v2/extract
       # @param urls [Array<String>] Array of URLs to extract data from.
       # @param options [Hash] Options to pass to the extract endpoint. https://docs.firecrawl.dev/api-reference/endpoint/extract
       # @return [Firecrawl::V1::Extract] The extraction job information.
@@ -135,7 +135,7 @@ module Firecrawl
         Extract.new(response.body)
       end
       
-      # GET /v1/extract/{:id}
+      # GET /v2/extract/{:id}
       # @param id [String] The ID of the extract job.
       # @return [Firecrawl::V1::ExtractStatus] The status of the extract job.
       def extract_status(id)
@@ -145,35 +145,35 @@ module Firecrawl
 
       # Account Endpoints
 
-      # GET /v1/team/credit-usage
+      # GET /v2/team/credit-usage
       # @return [Faraday::Response] The current credit usage information.
       def credit
         response = get to("team/credit-usage")
         CreditUsage.new(**response.body)
       end
 
-      # GET /v1/team/credit-usage/historical
+      # GET /v2/team/credit-usage/historical
       # @return [Faraday::Response] The historical credit usage information.
       def credit_historical
         response = get to("team/credit-usage/historical")
         CreditHistorical.new(**response.body)
       end
 
-      # GET /v1/team/token-usage
+      # GET /v2/team/token-usage
       # @return [Faraday::Response] The current token usage information.
       def token
         response = get to("team/token-usage")
         TokenUsage.new(**response.body)
       end
 
-      # GET /v1/team/token-usage/historical
+      # GET /v2/team/token-usage/historical
       # @return [Faraday::Response] The historical token usage information.
       def token_historical
         response = get to("team/token-usage/historical")
         TokenHistorical.new(**response.body)
       end
 
-      # GET /v1/team/queue-status
+      # GET /v2/team/queue-status
       # @return [Faraday::Response] The current queue status information.
       def queue
         response = get to("team/queue-status")

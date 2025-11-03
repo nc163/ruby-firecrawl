@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Firecrawl
-  module V1
+  module V2
      
     Document = Struct.new(
       :markdown,
@@ -15,6 +15,7 @@ module Firecrawl
 
     Scrape = Struct.new(
       *Document.members,
+      :summary,
       :actions,
       :llm_extraction,
       :warning,
@@ -51,6 +52,7 @@ module Firecrawl
 
     CancelBatchScrape = Struct.new(
       :success,
+      :status,
       :message,
       keyword_init: true
     )
@@ -120,6 +122,7 @@ module Firecrawl
       :success,
       :data,
       :warning,
+      :creditsUsed,
       keyword_init: true
     )
 
@@ -128,6 +131,7 @@ module Firecrawl
     Extract = Struct.new(
       :success,
       :id,
+      :urlTrace,
       :invalidURLs,
       keyword_init: true
     )

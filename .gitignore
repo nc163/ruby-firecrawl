@@ -3,3 +3,5 @@
 .DS_Store
 openapi-generator-cli.jar
 *.gem
+spec/cassettes/server/**/*
+!spec/cassettes/server/.keep
