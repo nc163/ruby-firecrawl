@@ -2,9 +2,6 @@
 
 This is a library written in Ruby to communicate with [Firecrawl](https://www.firecrawl.dev).
 
-Only the features documented under `api/v1` as of Firecrawl version v1.11.0 are provided by this library.
-
-`/spec` The following tests are performed with Firecrawl version v1.11.0 running in self-hosted mode.
 
 ## Installation
 
