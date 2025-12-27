@@ -1,12 +1,14 @@
 /vendor/bundle
 
 .DS_Store
-
 !.keep
+
+.env
+# version control
+.ruby-version
+# mock
+tmp/**/*
 
 *.gem
 spec/cassettes/server/**/*
 !spec/cassettes/server/.keep
-
-# mock
-tmp/**/*

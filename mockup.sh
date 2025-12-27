@@ -3,15 +3,16 @@
 if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
 fi
+
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
-FIRECRAWL_DIR=$SCRIPT_DIR/tmp/firecrawl
+FIRECRAWL_DIR=$SCRIPT_DIR/tmp/firecrawl-$FIRECRAWL_VERSION
 
 if [ ! -d $FIRECRAWL_DIR ]; then
     echo "Cloning Firecrawl repository..."
     git clone https://github.com/firecrawl/firecrawl.git $FIRECRAWL_DIR
 fi
 git -C $FIRECRAWL_DIR fetch origin --tags
-git -C $FIRECRAWL_DIR checkout v2.5.0
+git -C $FIRECRAWL_DIR checkout FIRECRAWL_VERSION
 touch $FIRECRAWL_DIR/.env
 cat > $FIRECRAWL_DIR/.env <<EOF
 # ===== Required ENVS ======

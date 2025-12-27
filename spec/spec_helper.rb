@@ -1,6 +1,9 @@
 require "bundler/setup"
 Bundler.setup
 
+require 'dotenv/load'
+Dotenv.load
+
 require "firecrawl"
 require 'vcr'
 require 'webmock/rspec'
@@ -11,7 +14,7 @@ RSpec.configure do |rspec_config|
 
   rspec_config.before(:all) do
     Firecrawl::configure do |config|
-      config.url = 'http://host.docker.internal:3002'
+      config.url = ENV['FIRECRAWL_ENDPOINT']
     end
 
     VCR.configure do |config|
@@ -27,5 +30,3 @@ RSpec.configure do |rspec_config|
   #   WebMock.allow_net_connect!
   # end
 end
-
-
