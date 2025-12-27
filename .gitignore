@@ -1,7 +1,12 @@
 /vendor/bundle
 
 .DS_Store
-openapi-generator-cli.jar
+
+!.keep
+
 *.gem
 spec/cassettes/server/**/*
 !spec/cassettes/server/.keep
+
+# mock
+tmp/**/*
