@@ -8,7 +8,7 @@ require_relative 'error_handler'
 module Firecrawl
   module HTTP
     include HTTPHeaders
-  
+
     def get(uri)
       connection.get(uri)
     end
@@ -26,15 +26,15 @@ module Firecrawl
     private
 
     def connection
-      @faraday ||= Faraday.new do |b|
+      @faraday ||= Faraday.new do |faraday|
         default_headers.each do |key, value|
-          b.headers[key] = value
+          faraday.headers[key] = value
         end
-        b.options[:open_timeout] = 2
-        b.options[:timeout] = 60
-        b.use ErrorHandler
-        b.use MiddlewareErrors if @log_errors
-        b.response :json
+        faraday.options[:open_timeout] = 2
+        faraday.options[:timeout] = 60
+        faraday.use ErrorHandler
+        faraday.use MiddlewareErrors if @log_errors
+        faraday.response :json
       end
     end
 
