@@ -13,7 +13,7 @@ module Firecrawl
       # POST /v1/scrape
       # @param url [String] URL to scrape.
       # @param options [Hash] Options to pass to the scrape endpoint. https://docs.firecrawl.dev/api-reference/endpoint/scrape
-      # @return [Firecrawl::V1::Scrape] 
+      # @return [Firecrawl::V1::Scrape]
       def scrape(url, options = {})
         options[:url] = url
         options[:timeout] ||= 300000
@@ -75,7 +75,7 @@ module Firecrawl
         response = get to("crawl/#{job_id}")
         CrawlStatus.new(**response.body)
       end
-      
+
       # DELETE /v1/crawl/{:id}
       # @param job_id [String] The ID of the crawl job.
       # @return [Firecrawl::V1::CancelCrawl] The cancellation result.
@@ -134,7 +134,7 @@ module Firecrawl
         response = post to("extract"), body: options
         Extract.new(response.body)
       end
-      
+
       # GET /v1/extract/{:id}
       # @param id [String] The ID of the extract job.
       # @return [Firecrawl::V1::ExtractStatus] The status of the extract job.
@@ -180,7 +180,7 @@ module Firecrawl
         QueueStatus.new(**response.body)
       end
 
-      private 
+      private
 
       def to(path)
         url(API_VERSION, path)

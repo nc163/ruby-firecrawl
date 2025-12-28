@@ -2,7 +2,7 @@
 
 module Firecrawl
   module V1
-     
+
     Document = Struct.new(
       :markdown,
       :html,
@@ -26,7 +26,7 @@ module Firecrawl
       :success,
       :id,
       :url,
-      :invalidURLs, 
+      :invalidURLs,
       keyword_init: true
     )
 
@@ -50,8 +50,10 @@ module Firecrawl
     end
 
     CancelBatchScrape = Struct.new(
-      :success,
-      :message,
+      # MEMO: ドキュメントと実際の応答が違う
+      :success, # 記載あり 帰ってこない
+      :message, # 記載あり 帰ってこない
+      :status,  # 記載なし　帰ってくる
       keyword_init: true
     )
 
@@ -62,7 +64,7 @@ module Firecrawl
     )
 
     # Crawl Endpoints
-    
+
     Crawl = Struct.new(
       :success,
       :id,
@@ -107,7 +109,7 @@ module Firecrawl
     )
 
     # Map Endpoints
-     
+
     Map = Struct.new(
       :success,
       :links,
@@ -115,7 +117,7 @@ module Firecrawl
     )
 
     # Search Endpoints
-    
+
     Search = Struct.new(
       :success,
       :data,
@@ -124,7 +126,7 @@ module Firecrawl
     )
 
     # Extract Endpoints
-     
+
     Extract = Struct.new(
       :success,
       :id,
@@ -140,7 +142,7 @@ module Firecrawl
     )
 
     # Account Endpoints
-     
+
     CreditUsage = Struct.new(
       :success,
       :data,

@@ -6,142 +6,174 @@ describe Firecrawl::V2::Client do
   subject { described_class.new }
   let(:test_page) { 'https://www.firecrawl.dev' }
   let(:test_pages) { ['https://www.firecrawl.dev', 'https://rubygems.org/'] }
-   
-  context 'Scrape Endpoint' do 
-    it '[POST] /scrape', :vcr do
-      result = subject.scrape(test_page)
-      expect(result).to be_a(Firecrawl::V2::Scrape)
+
+  #
+  context 'Scrape Endpoint', :vcr do
+    let!(:scrape) { subject.scrape(test_page) }
+
+    it '[POST] /scrape' do
+      expect(scrape).to be_a(Firecrawl::V2::Scrape)
     end
   end
 
-  context "Batch Scrape Endpoint", order: :defined do
-    before(:context) do
-      @batch_scrape = {}
-    end
-    
-    it '[POST] /batch/scrape', :vcr do
-      result = subject.batch_scrape(test_pages)
-      expect(result).to be_a(Firecrawl::V2::BatchScrape)
-      @batch_scrape[:id] = result.id
+  #
+  context "Batch Scrape Endpoint", :vcr do
+    let!(:batch_scrape) { subject.batch_scrape(test_pages) }
+
+    it '[POST] /batch/scrape' do
+      expect(batch_scrape).to be_a(Firecrawl::V2::BatchScrape)
     end
 
-    it '[GET] /batch/scrape/{:id}', :vcr do
-      result = subject.batch_scrape_status(@batch_scrape[:id])
-      expect(result).to be_a(Firecrawl::V2::BatchScrapeStatus)
-      expect(result.data).to all(be_a(Firecrawl::V2::Document))
+    context "Batch Scrape Status" do
+      let!(:batch_scrape_status) { subject.batch_scrape_status(batch_scrape.id) }
+
+      it '[GET] /batch/scrape/{:id}' do
+        expect(batch_scrape_status).to be_a(Firecrawl::V2::BatchScrapeStatus)
+        expect(batch_scrape_status.data).to all(be_a(Firecrawl::V2::Document))
+      end
     end
 
-    it '[DELETE] /batch/scrape/{:id}', :vcr do
-      result = subject.cancel_batch_scrape(@batch_scrape[:id])
-      expect(result).to be_a(Firecrawl::V2::CancelBatchScrape)
+    context "Cancel Batch Scrape" do
+      let!(:batch_scrape) { subject.batch_scrape(test_pages) }
+      let!(:cancel_batch_scrape) { subject.cancel_batch_scrape(batch_scrape.id) }
+
+      it '[DELETE] /batch/scrape/{:id}' do
+        expect(cancel_batch_scrape).to be_a(Firecrawl::V2::CancelBatchScrape)
+      end
     end
 
-    it '[GET] /batch/scrape/{:id}/errors', :vcr do
-      result = subject.batch_scrape_errors(@batch_scrape[:id])
-      expect(result).to be_a(Firecrawl::V2::BatchScrapeErrors)
+    context "Batch Scrape Errors" do
+      let!(:batch_scrape) { subject.batch_scrape(test_pages) }
+      let!(:batch_scrape_errors) { subject.batch_scrape_errors(batch_scrape.id) }
+
+      it '[GET] /batch/scrape/{:id}/errors' do
+        expect(batch_scrape_errors).to be_a(Firecrawl::V2::BatchScrapeErrors)
+      end
     end
   end
 
-  context "Crawl Endpoint", order: :defined do
-    before(:context) do
-      @crawl = {}
-    end
-    
-    it '[POST] /crawl', :vcr do
-      result = subject.crawl(test_page)
-      expect(result).to be_a(Firecrawl::V2::Crawl)
-      @crawl[:id] = result.id
+  #
+  context "Crawl Endpoint", :vcr do
+    let!(:crawl) { subject.crawl(test_page) }
+
+    it '[POST] /crawl' do
+      expect(crawl).to be_a(Firecrawl::V2::Crawl)
     end
 
-    it '[GET] /crawl/{:id}', :vcr do
-      result = subject.crawl_status(@crawl[:id])
-      expect(result).to be_a(Firecrawl::V2::CrawlStatus)
-      expect(result.data).to all(be_a(Firecrawl::V2::Document))
+    context "Crawl Status" do
+      let!(:crawl_status) { subject.crawl_status(crawl.id) }
+
+      it '[GET] /crawl/{:id}' do
+        expect(crawl_status).to be_a(Firecrawl::V2::CrawlStatus)
+        expect(crawl_status.data).to all(be_a(Firecrawl::V2::Document))
+      end
     end
 
-    it '[GET] /crawl/{:id}/errors', :vcr do
-      result = subject.crawl_errors(@crawl[:id])
-      expect(result).to be_a(Firecrawl::V2::CrawlErrors)
+    context "Crawl Errors" do
+      let!(:crawl_errors) { subject.crawl_errors(crawl.id) }
+
+      it '[GET] /crawl/{:id}/errors' do
+        expect(crawl_errors).to be_a(Firecrawl::V2::CrawlErrors)
+      end
     end
 
-    it '[GET] /crawl/active', :vcr do
-      result = subject.active_crawls
-      expect(result).to be_a(Firecrawl::V2::ActiveCrawls)
+    context "Active Crawls" do
+      let!(:active_crawls) { subject.active_crawls }
+
+      it '[GET] /crawl/active' do
+        expect(active_crawls).to be_a(Firecrawl::V2::ActiveCrawls)
+      end
     end
 
-    it '[DELETE] /crawl/{:id}', :vcr do
-      result = subject.cancel_crawl(@crawl[:id])
-      expect(result).to be_a(Firecrawl::V2::CancelCrawl)
+
+    context "Cancel Crawls" do
+      let!(:cancel_crawl) { subject.cancel_crawl(crawl.id) }
+
+      it '[DELETE] /crawl/{:id}' do
+        expect(cancel_crawl).to be_a(Firecrawl::V2::CancelCrawl)
+      end
     end
   end
 
-  context "Map Endpoint", order: :defined do
+  #
+  context "Map Endpoint", :vcr do
     before(:context) do
       @map = {}
     end
 
-    it '[POST] /map', :vcr do
+    it '[POST] /map' do
       result = subject.map(test_page)
       expect(result).to be_a(Firecrawl::V2::Map)
     end
   end
 
+  #
   context "Search Endpoint", order: :defined do
-    before(:context) do
-      @search = {}
-    end
-    
+    let!(:search) { subject.search('firecrawlについて') }
+
     it '[POST] /search', :vcr do
-      result = subject.search('firecrawlについて')
-      expect(result).to be_a(Firecrawl::V2::Search)
+      expect(search).to be_a(Firecrawl::V2::Search)
     end
   end
-    
-  context "Extract Endpoint", order: :defined do
-    before(:context) do
-      @extract = {}
-    end
-    
+
+  #
+  context "Extract Endpoint", :vcr do
+    let!(:extract) { subject.extract(test_pages) }
+
     it '[POST] /extract', :vcr do
-      result = subject.extract(test_pages)
       expect(result).to be_a(Firecrawl::V2::Extract)
-      @extract[:id] = result.id
     end
 
-    it '[GET] /extract/{:id}', :vcr do
-      result = subject.extract_status(@extract[:id])
-      expect(result).to be_a(Firecrawl::V2::ExtractStatus)
+    context "Extract Status" do
+      let!(:extract_status) { subject.extract_status(extract.id) }
+
+      it '[GET] /extract/{:id}' do
+        expect(extract_status).to be_a(Firecrawl::V2::ExtractStatus)
+      end
     end
   end
 
-  context "Account Endpoint", order: :defined do
-    before(:context) do
-      @account = {}
+  #
+  context "Account Endpoint", :vcr do
+
+    context "Credit" do
+      let!(:credit) { subject.credit }
+
+      it '[GET] /team/credit-usage' do
+        expect(credit).to be_a(Firecrawl::V2::CreditUsage)
+      end
     end
 
-    it '[GET] /team/credit-usage', :vcr do
-      result = subject.credit
-      expect(result).to be_a(Firecrawl::V2::CreditUsage)
+    context "Credit Historical" do
+      let!(:credit_historical) { subject.credit_historical }
+
+      it '[GET] /team/credit-usage/historical' do
+        expect(credit_historical).to be_a(Firecrawl::V2::CreditHistorical)
+      end
     end
 
-    it '[GET] /team/credit-usage/historical', :vcr do
-      result = subject.credit_historical
-      expect(result).to be_a(Firecrawl::V2::CreditHistorical)
+    context "Token" do
+      let!(:token) { subject.token }
+
+      it '[GET] /team/token-usage' do
+        expect(token).to be_a(Firecrawl::V2::TokenUsage)
+      end
     end
 
-    it '[GET] /team/token-usage', :vcr do
-      result = subject.token
-      expect(result).to be_a(Firecrawl::V2::TokenUsage)
+    context "Token Usage Historical" do
+      let!(:token_historical) { subject.token_historical }
+
+      it '[GET] /team/token-usage/historical' do
+        expect(token_historical).to be_a(Firecrawl::V2::TokenHistorical)
+      end
     end
 
-    it '[GET] /team/token-usage/historical', :vcr do
-      result = subject.token_historical
-      expect(result).to be_a(Firecrawl::V2::TokenHistorical)
-    end
+    context "Queue" do
+      let!(:queue) { subject.queue }
 
-    it '[GET] /team/queue', :vcr do
-      result = subject.queue
-      expect(result).to be_a(Firecrawl::V2::QueueStatus)
+      it '[GET] /team/queue' do
+        expect(queue).to be_a(Firecrawl::V2::QueueStatus)
+      end
     end
   end
 end
