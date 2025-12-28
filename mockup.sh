@@ -14,6 +14,8 @@ fi
 git -C $FIRECRAWL_DIR fetch origin --tags
 git -C $FIRECRAWL_DIR checkout FIRECRAWL_VERSION
 touch $FIRECRAWL_DIR/.env
+
+# https://github.com/firecrawl/firecrawl/blob/v2.5.0/SELF_HOST.md
 cat > $FIRECRAWL_DIR/.env <<EOF
 # ===== Required ENVS ======
 PORT=3002
@@ -70,18 +72,21 @@ BULL_AUTH_KEY=CHANGEME
 
 # This is now autoconfigured by the docker-compose.yaml. You shouldn't need to set it.
 # PLAYWRIGHT_MICROSERVICE_URL=http://playwright-service:3000/scrape
-REDIS_URL=redis://redis:6379
-REDIS_RATE_LIMIT_URL=redis://redis:6379
+# REDIS_URL=redis://redis:6379
+# REDIS_RATE_LIMIT_URL=redis://redis:6379
+
+## === PostgreSQL Database Configuration ===
+# Configure PostgreSQL credentials. These should match the credentials used by the nuq-postgres container.
+# If you change these, ensure all three are set consistently.
+# POSTGRES_USER=postgres
+# POSTGRES_PASSWORD=postgres
+# POSTGRES_DB=postgres
 
 # Set if you have a llamaparse key you'd like to use to parse pdfs
 # LLAMAPARSE_API_KEY=
 
 # Set if you'd like to send server health status messages to Slack
 # SLACK_WEBHOOK_URL=
-
-# Set if you'd like to send posthog events like job logs
-# POSTHOG_API_KEY=
-# POSTHOG_HOST=
 
 ## === System Resource Configuration ===
 # Maximum CPU usage threshold (0.0-1.0). Worker will reject new jobs when CPU usage exceeds this value.
@@ -97,4 +102,5 @@ REDIS_RATE_LIMIT_URL=redis://redis:6379
 EOF
 
 docker compose -f $FIRECRAWL_DIR/docker-compose.yaml pull
-docker compose -f $FIRECRAWL_DIR/docker-compose.yaml up -d
+docker compose -f $FIRECRAWL_DIR/docker-compose.yaml build
+docker compose -f $FIRECRAWL_DIR/docker-compose.yaml up
