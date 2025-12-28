@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Firecrawl::HTTP do
+describe Firecrawl do
   subject { Firecrawl::V1::Client.new }
   let (:stub_url) { "#{ENV['FIRECRAWL_ENDPOINT']}/v1/scrape" }
 
