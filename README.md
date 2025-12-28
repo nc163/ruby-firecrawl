@@ -16,7 +16,7 @@ simple
 require 'firecrawl'
 
 firecrawl = Firecrawl::V2::Client.new(url: 'http://127.0.0.1:3002')
-result = firecrawl.scrape('https://www.firecrawl.dev')
+firecrawl.scrape('https://www.firecrawl.dev')
 ```
 
 or if rails, create a file in `config/initializers/firecrawl.rb` and add the following code:
@@ -54,7 +54,6 @@ extract = {
   }
 }
 firecrawl.scrape('https://www.firecrawl.dev', formats: ['extract'], timeout: 12000, extract: extract)
-
 ```
 
 
