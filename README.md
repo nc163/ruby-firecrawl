@@ -15,7 +15,7 @@ simple
 ```ruby
 require 'firecrawl'
 
-firecrawl = Firecrawl::V1::Client.new(url: 'http://127.0.0.1:3002')
+firecrawl = Firecrawl::V2::Client.new(url: 'http://127.0.0.1:3002')
 result = firecrawl.scrape('https://www.firecrawl.dev')
 ```
 
@@ -33,17 +33,15 @@ end
 ### scrape
 
 ```ruby
-firecrawl = Firecrawl::V1::Client.new
-result = firecrawl.scrape('https://www.firecrawl.dev')
-puts result
+firecrawl = Firecrawl::V2::Client.new
+firecrawl.scrape('https://www.firecrawl.dev')
 ```
 
 
 ### scrape + extract
 
 ```ruby
-firecrawl = Firecrawl::V1::Client.new
-
+firecrawl = Firecrawl::V2::Client.new
 extract = { 
   schema: 
   {
@@ -55,15 +53,14 @@ extract = {
     }
   }
 }
-result = client.scrape('https://www.firecrawl.dev', formats: ['extract'], timeout: 12000, extract: extract)
-puts result
+firecrawl.scrape('https://www.firecrawl.dev', formats: ['extract'], timeout: 12000, extract: extract)
+
 ```
 
 
 ### crawl
 
 ```ruby
-firecrawl = Firecrawl::V1::Client.new
-result = firecrawl.crawl('https://www.firecrawl.dev')
-puts result
+firecrawl = Firecrawl::V2::Client.new
+firecrawl.crawl('https://www.firecrawl.dev')
 ```

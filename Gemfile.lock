@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-firecrawl (2.0.0)
+    ruby-firecrawl (2.7.0)
       faraday (~> 2.0)
 
 GEM
