@@ -30,7 +30,7 @@ module Firecrawl
       message = if body.is_a?(Hash)
         body['message'] || body['error']
       else
-        body.to_s.presence
+        body.to_s
       end
 
       "#{message}"
