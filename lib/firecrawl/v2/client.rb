@@ -81,7 +81,7 @@ module Firecrawl
       # @return [Firecrawl::V1::CancelCrawl] The cancellation result.
       def cancel_crawl(job_id)
         response = delete to("crawl/#{job_id}")
-        CancelCrawl.new(response.body)
+        CancelCrawl.new(**response.body)
       end
 
       # GET /v2/crawl/{:id}/errors
@@ -89,7 +89,7 @@ module Firecrawl
       # @return [Firecrawl::V1::CrawlErrors] The errors from the crawl job.
       def crawl_errors(job_id)
         response = get to("crawl/#{job_id}/errors")
-        CrawlErrors.new(response.body)
+        CrawlErrors.new(**response.body)
       end
 
       # GET /v2/crawl/active
@@ -108,7 +108,7 @@ module Firecrawl
       def map(url, options = {})
         options[:url] = url
         response = post to("map"), body: options
-        Map.new(response.body)
+        Map.new(**response.body)
       end
 
       # Search Endpoints
@@ -120,7 +120,7 @@ module Firecrawl
       def search(query, options = {})
         options[:query] = query
         response = post to("search"), body: options
-        Search.new(response.body)
+        Search.new(**response.body)
       end
 
       # Extract Endpoints
@@ -132,7 +132,7 @@ module Firecrawl
       def extract(urls, options = {})
         options[:urls] = urls
         response = post to("extract"), body: options
-        Extract.new(response.body)
+        Extract.new(**response.body)
       end
       
       # GET /v2/extract/{:id}
@@ -140,7 +140,7 @@ module Firecrawl
       # @return [Firecrawl::V1::ExtractStatus] The status of the extract job.
       def extract_status(id)
         response = get to("extract/#{id}")
-        ExtractStatus.new(response.body)
+        ExtractStatus.new(**response.body)
       end
 
       # Account Endpoints
