@@ -140,6 +140,8 @@ module Firecrawl
       :success,
       :data,
       :status,
+      :error,
+      :expiresAt,
       keyword_init: true
     )
 
